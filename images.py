@@ -10,7 +10,7 @@ def main():
     length = len(sys.argv)
 
     if (length == 1):
-        print(FILE_NAME + " <input> [output]")
+        print(f"{FILE_NAME} <input> [output]")
         return
 
     try:
@@ -26,8 +26,10 @@ def main():
 
         output = sys.argv[2] if length > 2 else "new-" + sys.argv[1]
         image.save(output)
+
+        print(f"Wrote to {output}")
     except (IOError, OSError):
-        print(sys.argv[1] + " cannot be read by PIL")
+        print(f"{sys.argv[1]} cannot be read by PIL")
 
 def stripAlpha(image):
     return image
