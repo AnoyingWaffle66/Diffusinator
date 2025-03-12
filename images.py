@@ -15,21 +15,12 @@ def main():
         return
 
     try:
-        image = Image.open(sys.argv[1])
-
-        if (image.size != IMAGE_SIZE):
-            image = image.resize(IMAGE_SIZE, Image.LANCZOS)
-
-        image = stripAlpha(image)
-        array = np.array(image).flatten()
-        tensor = torch.from_numpy(array)
+        tensor = readImage(sys.argv[1])
 
         # TODO: Pass array to diffusinator.
-
-        imageNew = Image.fromarray(np.reshape(tensor.numpy(), IMAGE_SIZE))
-
         output = sys.argv[2] if length > 2 else "new-" + os.path.basename(sys.argv[1])
-        image.save(imageNew)
+
+        writeImage(output, tensor)
 
         print(f"Wrote to {output}")
     except IOError:
@@ -37,8 +28,18 @@ def main():
     except OSError:
         print("'if its an OS error then it's actually your fault' - Andrew Bell")
 
-def stripAlpha(image):
-    return image
+def readImage(fileName):
+    image = Image.open(fileName)
+
+    if (image.size != IMAGE_SIZE):
+        image = image.resize(IMAGE_SIZE, Image.LANCZOS)
+
+    array = np.array(image).flatten()
+        
+    return torch.from_numpy(array)
+
+def writeImage(fileName, tensor):
+    Image.fromarray(np.reshape(tensor.numpy(), IMAGE_SIZE)).save(fileName)
 
 if __name__ == "__main__":
     main()
