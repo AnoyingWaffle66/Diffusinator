@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import os
 
-IMAGE_SIZE = 32, 32
+IMAGE_SIZE = 16, 16
 FILE_NAME = os.path.basename(__file__)
 
 def main():
@@ -35,12 +35,11 @@ def readImage(fileName):
         image = image.resize(IMAGE_SIZE, Image.LANCZOS)
 
     array = np.array(image).flatten()
-    array = array.astype(np.float32) / 255.0
+        
     return torch.from_numpy(array)
 
 def writeImage(fileName, tensor):
-    Image.fromarray(np.reshape(tensor, (IMAGE_SIZE[0], IMAGE_SIZE[0], 4))).save("images/" + fileName)
-    # Image.fromarray(tensor).save(fileName)
+    Image.fromarray(np.reshape(tensor.numpy(), IMAGE_SIZE)).save(fileName)
 
 if __name__ == "__main__":
     main()
