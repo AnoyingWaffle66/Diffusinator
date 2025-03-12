@@ -9,8 +9,8 @@ model = m.NeuralNetwork().to(device)
 criterion = torch.nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=.005)
 
-input = torch.tensor(torch.rand(1, 4 * 16 * 16))
-output = torch.tensor(torch.rand(1, 4 * 16 * 16))
+input = torch.rand(1, 4 * 16 * 16)
+output = torch.rand(1, 4 * 16 * 16)
 print(output)
 
 for epoch in range(20000):
