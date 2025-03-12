@@ -21,6 +21,7 @@ def main():
 
         image = stripAlpha(image)
         array = np.array(image)
+        print(array)
 
         # TODO: Pass array to diffusinator.
 
@@ -28,8 +29,10 @@ def main():
         image.save(output)
 
         print(f"Wrote to {output}")
-    except (IOError, OSError):
+    except IOError:
         print(f"{sys.argv[1]} cannot be read by PIL")
+    except OSError:
+        print("'if its an OS error then it's actually your fault' - Andrew Bell")
 
 def stripAlpha(image):
     return image
