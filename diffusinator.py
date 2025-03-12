@@ -3,19 +3,21 @@ import numpy as np
 import model as m
 import images as im
 
-EPOCHS = 20000
+EPOCHS = 200
+LEARNING_RATE = .130
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 print(f"Using {device} device")
 
 model = m.NeuralNetwork().to(device)
 criterion = torch.nn.MSELoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=.0015)
+optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
 
+images = []
 input = torch.rand(1, 4 * 32 * 32)
+images.append(np.array(input.detach()))
 output = im.readImage("c:\\Users\\jarbon\\Downloads\\cirno.png")
 print(output)
-images = []
 for epoch in range(EPOCHS):
     optimizer.zero_grad()
     outputs = model(input)
@@ -36,6 +38,3 @@ for thing in images:
     thing = thing.astype(np.uint8)
     im.writeImage(f"{i}test.png", thing)
     i += 1
-
-print(images)
-print("Training complete.")
