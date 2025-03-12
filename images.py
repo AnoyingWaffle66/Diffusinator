@@ -1,3 +1,4 @@
+import torch
 from PIL import Image
 import numpy as np
 import sys
@@ -20,13 +21,15 @@ def main():
             image = image.resize(IMAGE_SIZE, Image.LANCZOS)
 
         image = stripAlpha(image)
-        array = np.array(image)
-        print(array)
+        array = np.array(image).flatten()
+        tensor = torch.from_numpy(array)
 
         # TODO: Pass array to diffusinator.
 
+        imageNew = Image.fromarray(np.reshape(tensor.numpy(), IMAGE_SIZE))
+
         output = sys.argv[2] if length > 2 else "new-" + os.path.basename(sys.argv[1])
-        image.save(output)
+        image.save(imageNew)
 
         print(f"Wrote to {output}")
     except IOError:
