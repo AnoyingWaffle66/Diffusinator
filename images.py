@@ -24,7 +24,7 @@ def main():
 
         # TODO: Pass array to diffusinator.
 
-        output = sys.argv[2] if length > 2 else "new-" + sys.argv[1]
+        output = sys.argv[2] if length > 2 else "new-" + os.path.basename(sys.argv[1])
         image.save(output)
 
         print(f"Wrote to {output}")
