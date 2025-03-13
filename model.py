@@ -3,15 +3,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class NeuralNetwork(nn.Module):
-    def __init__(self):
+    def __init__(self, num):
         super().__init__()
         self.flatten = nn.Flatten()
         self.linear_relu_stack = nn.Sequential(
-            nn.Linear(4 * 32 * 32, 64),
+            nn.Linear(4 * num * num, num * 8),
             nn.ReLU(),
-            nn.Linear(64, 1024),
+            nn.Linear(num * 8, num * 16),
             nn.ReLU(),
-            nn.Linear(1024, 4 * 32 * 32)
+            nn.Linear(num * 16, 4 * num * num)
         )
     
     def forward(self, x):

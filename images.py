@@ -28,18 +28,19 @@ def main():
     except OSError:
         print("'if its an OS error then it's actually your fault' - Andrew Bell")
 
-def readImage(fileName):
-    image = Image.open(fileName)
-
-    if (image.size != IMAGE_SIZE):
-        image = image.resize(IMAGE_SIZE, Image.LANCZOS)
+def readImage(fileName, num):
+    num = (num, num)
+    image = Image.open(fileName).convert("RGBA")
+    image.apply_transparency()
+    if (image.size != num):
+        image = image.resize(num, Image.LANCZOS)
 
     array = np.array(image).flatten()
     array = array.astype(np.float32) / 255.0
     return torch.from_numpy(array)
 
-def writeImage(fileName, tensor):
-    Image.fromarray(np.reshape(tensor, (IMAGE_SIZE[0], IMAGE_SIZE[0], 4))).save("images/" + fileName)
+def writeImage(fileName, tensor, num):
+    Image.fromarray(np.reshape(tensor, (num, num, 4))).save("images/" + fileName)
 
 if __name__ == "__main__":
     main()
