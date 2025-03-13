@@ -31,7 +31,7 @@ def thingamabob():
     input = torch.rand(1, 4 * num * num)
     images.append(np.array(input.detach()))
     output = im.readImage(sys.argv[1], num)
-    print(output)
+    # print(output)
     for epoch in range(EPOCHS):
         optimizer.zero_grad()
         outputs = model(input)
@@ -44,8 +44,8 @@ def thingamabob():
             images.append(np.array(thingy))
             
             print(f'Epoch [{epoch+1}/{EPOCHS}], Loss: {loss.item():.4f}', flush=True)
-        if epoch == EPOCHS - 1:
-            print(outputs)
+        # if epoch == EPOCHS - 1:
+        #     print(outputs)
 
     i = 1
     for thing in images:
